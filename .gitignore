@@ -4,7 +4,6 @@
 /node_modules/
 /var/
 /vendor/
-.env
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
