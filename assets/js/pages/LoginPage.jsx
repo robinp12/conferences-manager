@@ -8,8 +8,8 @@ const LoginPage = ({ history}) => {
     const {setIsAuthenticated} = useContext(AuthContext);
 
     const [credentials, setCredentials] = useState({
-        username: "simon.mohimont@hotmail.com",
-        password: "password",
+        username: "",
+        password: "",
     });
 
     // Gestion des champs
