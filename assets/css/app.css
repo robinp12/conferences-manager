@@ -1,0 +1,21 @@
+h1{
+    text-align: center;
+    margin: 20px;
+}
+form{
+    margin-left: 22%;
+    margin-right: 22%;
+}
+.card{
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 2%;
+}
+.add{
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#searchBar {
+    max-height: 40px;
+}

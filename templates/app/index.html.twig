@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Abbott Application" %}
+
+{% block stylesheets %}
+    <link href="https://bootswatch.com/4/litera/bootstrap.min.css" rel="stylesheet"/>
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    <div id="app">
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://kit.fontawesome.com/7483cc41fd.js" crossorigin="anonymous"></script>
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
