@@ -4,7 +4,7 @@ import AuthContext from "../contexts/authContext";
 import Field from "../components/forms/Fields";
 import Header from '../components/Header';
 import axios from 'axios';
-import {API_URL, LOGIN_API, USERS_API} from "../config";
+import {LOGIN_API, USERS_API} from "../config";
 
 
 const LoginPage = ({ history}) => {
