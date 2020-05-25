@@ -19,6 +19,24 @@ function newDateTime(day, hour){
     return new Date(day + " " + hour);
 }
 
+function dateFormatFrWH (date){
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = d.getMonth();
+    const day = d.getDate();
+    let hours = d.getHours();
+    if ( hours < 10 ) {
+        hours = "0"+hours
+    }
+    let minutes = d.getMinutes();
+    if ( minutes < 10 ) {
+        minutes = "0"+minutes
+    }
+    let monthFr = getMonthFr(month);
+
+    return day + " " + monthFr + " " + year + " à " + hours + "h" + minutes
+}
+
 function getMonthFr(month){
     let monthFr = "";
     switch (month) {
@@ -81,4 +99,5 @@ function getDaysLeft (date){
     return diff;
 }
 
-export default { todayFormatYMD, dateFormatYMD, newDateTime, dateFormatFr, getDaysLeft }
+export default { todayFormatYMD, dateFormatYMD, newDateTime,
+    dateFormatFr, getDaysLeft, dateFormatFrWH }

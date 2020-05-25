@@ -18,6 +18,11 @@ function create (user){
         .post(USERS_API + "/", user);
 }
 
+function signUp (user){
+    return axios
+        .post(URL + "signup", user);
+}
+
 function update(id, user){
     return axios.put(USERS_API + "/" + id, user);
 }

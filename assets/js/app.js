@@ -17,6 +17,8 @@ import conferencedetails from './pages/Conferencedetails';
 import DateFunctions from "./services/DateFunctions";
 import ProfilPage from "./pages/ProfilPage";
 import UserProfilPage from "./pages/UserProfilPage";
+import QrCodePage from "./pages/QrCodePage";
+
 
 authAPI.setup();
 
@@ -37,7 +39,7 @@ const App = () => {
                             path="/login"
                             render={ props => <LoginPage onLogin={setIsAuthenticated} {...props}/> }
                         />
-                        <Route path={"/contact"} component={ContactPage}/>
+                        <PrivateRoute path={"/conferenceQrCode/:id"} component={QrCodePage}/>
                         <PrivateRoute path={"/conferencedetails/:id"} component={conferencedetails}/>
                         <PrivateRoute path={"/conferences"} component={ConferencePage}/>
                         <PrivateRoute path={"/userAccess"} component={UserAcceptPage}/>

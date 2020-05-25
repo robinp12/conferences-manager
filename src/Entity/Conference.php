@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert; // Symfony's built-in constraints
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 
 
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert; // Symfony's built-in con
  * @ApiResource(
  *  normalizationContext={
  *      "groups"={"conferences_read"}
- *  }
+ *  },
  * )
  */
 class Conference
@@ -55,19 +56,11 @@ class Conference
      */
     private $end;
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"conferences_read"})
      */
     private $room;
-
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Speaker", mappedBy="conference")
-     * @Groups({"conferences_read"})
-     */
-    private $speakers;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="conference")
@@ -81,11 +74,17 @@ class Conference
      */
     private $comments;
 
+    /**
+     * @ApiSubresource
+     * @ORM\OneToMany(targetEntity="App\Entity\Speaker", mappedBy="conference", orphanRemoval=true)
+     */
+    private $speakers;
+
     public function __construct()
     {
-        $this->speakers = new ArrayCollection();
         $this->participants = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->speakers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,37 +154,6 @@ class Conference
 
 
     /**
-     * @return Collection|Speaker[]
-     */
-    public function getSpeakers(): Collection
-    {
-        return $this->speakers;
-    }
-
-    public function addSpeaker(Speaker $speaker): self
-    {
-        if (!$this->speakers->contains($speaker)) {
-            $this->speakers[] = $speaker;
-            $speaker->setConference($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSpeaker(Speaker $speaker): self
-    {
-        if ($this->speakers->contains($speaker)) {
-            $this->speakers->removeElement($speaker);
-            // set the owning side to null (unless already changed)
-            if ($speaker->getConference() === $this) {
-                $speaker->setConference(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Participant[]
      */
     public function getParticipants(): Collection
@@ -241,6 +209,38 @@ class Conference
             // set the owning side to null (unless already changed)
             if ($comment->getConference() === $this) {
                 $comment->setConference(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection|Speaker[]
+     */
+    public function getSpeakers(): Collection
+    {
+        return $this->speakers;
+    }
+
+    public function addSpeaker(Speaker $speaker): self
+    {
+        if (!$this->speakers->contains($speaker)) {
+            $this->speakers[] = $speaker;
+            $speaker->setConference($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpeaker(Speaker $speaker): self
+    {
+        if ($this->speakers->contains($speaker)) {
+            $this->speakers->removeElement($speaker);
+            // set the owning side to null (unless already changed)
+            if ($speaker->getConference() === $this) {
+                $speaker->setConference(null);
             }
         }
 

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import usersAPI from "../services/usersAPI";
-import MedecinAPI from "../services/MedecinAPI";
 import ReactSearchBox from "react-search-box";
 
 
@@ -47,21 +46,16 @@ const UserProfilPage = props => {
     return(
         <>
             <div className="container">
-            <Header title={"Profil de " + user.firstName + " " + user.lastName}/>
-
+                <div className="row">
+                        <h3 className={"mb-5 text-center"}>Profil de {user.firstName + " " + user.lastName}</h3>
+                </div>
                 <div className={"row"}>
                     <div className="col">
                         <p><b>email:</b> {user.email}</p>
                         <p><b>tel: </b>{user.telephone}</p>
-                        <p><b>adresse: </b>{user.addresse}</p>
+                        <p><b>numéro INAMI:</b> {user.inamiNumber}</p>
+                        <p><b>spécialité: </b> {user.speciality}</p>
                     </div>
-                    {typeof user.medecin != 'undefined' &&
-                        <div className={"col"}>
-                            <h6>Infos médecins</h6>
-                            <p><b>numéro inami:</b> {user.medecin.inamiNumber}</p>
-                            <p><b>spécialité: </b> {user.medecin.speciality}</p>
-                        </div>
-                    }
                     <div className="col">
                         <ReactSearchBox
                             placeholder="Rechercher quelqu'un"
@@ -77,7 +71,6 @@ const UserProfilPage = props => {
                         />
                     </div>
                 </div>
-
             </div>
         </>
     )

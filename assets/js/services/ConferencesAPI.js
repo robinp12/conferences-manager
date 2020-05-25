@@ -8,6 +8,17 @@ function findAllConferences() {
         .then(response => response.data["hydra:member"]);
 }
 
+function find (id) {
+    return axios
+        .get(CONFERENCES_API +"/" + id)
+        .then(response => response.data);
+}
+
+function update(id, conf) {
+    return axios
+        .put(CONFERENCES_API + "/"+ id, conf)
+}
+
 function create(conf) {
     return axios
         .post(CONFERENCES_API, conf)
@@ -28,5 +39,6 @@ function deleteConference(id) {
 }
 
 export default{
-    findAllConferences, create,  subscribeConference, unSubscribeConference, deleteConference
+    findAllConferences, create,  subscribeConference,
+    unSubscribeConference, deleteConference, update, find
 }

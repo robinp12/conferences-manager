@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiResource(
@@ -33,7 +32,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"conferences_read", "users_read"})
+     * @Groups({"conferences_read", "users_read", "speakers_read"})
      */
     private $id;
 
@@ -41,7 +40,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="L'email doit être renseigné !")
      * @Assert\Email(message="L'adresse email doit avoir un format valide !")
-     * @Groups({"users_read"})
+     * @Groups({"users_read", "conferences_read"})
      */
     private $email;
 
@@ -62,7 +61,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="L'utilisateur doit avoir un nom!")
      * @Assert\Length(min=2, minMessage="Le nom doit faire au moins 2 caractères", max=255, maxMessage="Le nom doit faire moins de 255 caractères")
-     * @Groups({"conferences_read", "users_read"})
+     * @Groups({"conferences_read", "users_read", "speakers_read"})
      */
     private $lastName;
 
@@ -70,60 +69,58 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="L'utilisateur doit avoir un prénom!")
      * @Assert\Length(min=2, minMessage="Le prénom doit faire au moins 2 caractères", max=255, maxMessage="Le prénom doit faire moins de 255 caractères")
-     * @Groups({"conferences_read", "users_read"})
+     * @Groups({"conferences_read", "users_read", "speakers_read"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min=3, minMessage="Le nom de la conférence doit faire entre 3 et 255 caractères", max=255, maxMessage="Le nom de la conférence doit faire entre 2 et 255 caractères")
-     * @Groups({"users_read"})
+     * @Groups({"users_read", "conferences_read"})
      */
     private $telephone;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"users_read"})
-     */
-    private $addresse;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Admin", mappedBy="user")
-     */
-    private $admins;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Speaker", mappedBy="user")
-     */
-    private $speakers;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="user")
      */
     private $participants;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Medecin", mappedBy="user", cascade={"persist", "remove"})
-     * @Groups({"users_read"})
-     */
-    private $medecin;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"users_read"})
      */
     private $isAccepted;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+     *
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"users_read"})
+     */
+    private $inamiNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"users_read"})
+     */
+    private $speciality;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Speaker", mappedBy="user", orphanRemoval=true)
+     */
+    private $speakers;
+
     public function __construct()
     {
-        $this->admins = new ArrayCollection();
-        $this->speakers = new ArrayCollection();
+        $this->isAccepted = false;
         $this->participants = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->speakers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,80 +237,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAddresse(): ?string
-    {
-        return $this->addresse;
-    }
-
-    public function setAddresse(?string $addresse): self
-    {
-        $this->addresse = $addresse;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Admin[]
-     */
-    public function getAdmins(): Collection
-    {
-        return $this->admins;
-    }
-
-    public function addAdmin(Admin $admin): self
-    {
-        if (!$this->admins->contains($admin)) {
-            $this->admins[] = $admin;
-            $admin->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAdmin(Admin $admin): self
-    {
-        if ($this->admins->contains($admin)) {
-            $this->admins->removeElement($admin);
-            // set the owning side to null (unless already changed)
-            if ($admin->getUser() === $this) {
-                $admin->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Speaker[]
-     */
-    public function getSpeakers(): Collection
-    {
-        return $this->speakers;
-    }
-
-    public function addSpeaker(Speaker $speaker): self
-    {
-        if (!$this->speakers->contains($speaker)) {
-            $this->speakers[] = $speaker;
-            $speaker->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSpeaker(Speaker $speaker): self
-    {
-        if ($this->speakers->contains($speaker)) {
-            $this->speakers->removeElement($speaker);
-            // set the owning side to null (unless already changed)
-            if ($speaker->getUser() === $this) {
-                $speaker->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection|Participant[]
      */
@@ -345,22 +268,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getMedecin(): ?Medecin
-    {
-        return $this->medecin;
-    }
-
-    public function setMedecin(Medecin $medecin): self
-    {
-        $this->medecin = $medecin;
-
-        // set the owning side of the relation if necessary
-        if ($medecin->getUser() !== $this) {
-            $medecin->setUser($this);
-        }
-
-        return $this;
-    }
 
     public function getIsAccepted(): ?bool
     {
@@ -399,6 +306,61 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getInamiNumber(): ?string
+    {
+        return $this->inamiNumber;
+    }
+
+    public function setInamiNumber(?string $inamiNumber): self
+    {
+        $this->inamiNumber = $inamiNumber;
+
+        return $this;
+    }
+
+    public function getSpeciality(): ?string
+    {
+        return $this->speciality;
+    }
+
+    public function setSpeciality(?string $speciality): self
+    {
+        $this->speciality = $speciality;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Speaker[]
+     */
+    public function getSpeakers(): Collection
+    {
+        return $this->speakers;
+    }
+
+    public function addSpeaker(Speaker $speaker): self
+    {
+        if (!$this->speakers->contains($speaker)) {
+            $this->speakers[] = $speaker;
+            $speaker->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpeaker(Speaker $speaker): self
+    {
+        if ($this->speakers->contains($speaker)) {
+            $this->speakers->removeElement($speaker);
+            // set the owning side to null (unless already changed)
+            if ($speaker->getUser() === $this) {
+                $speaker->setUser(null);
             }
         }
 

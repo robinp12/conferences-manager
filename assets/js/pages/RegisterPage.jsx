@@ -34,14 +34,14 @@ const RegisterPage = ({ history }) => {
 
         if (user.password !== user.passwordConfirm) {
             apiErrors.passwordConfirm =
-                "Votre confirmation de mot de passe n'est pas conforme avec le mot de passe original";
+                "Le mot de passe n'est pas identique";
             setErrors(apiErrors);
             toast.error("Des erreurs dans votre formulaire !");
             return;
         }
 
         try {
-            await UsersAPI.create(user);
+            await UsersAPI.signUp(user);
             setErrors({});
 
             toast.success(
@@ -68,7 +68,7 @@ const RegisterPage = ({ history }) => {
                 <Field
                     name="firstName"
                     label="Prénom"
-                    placeholder="Votre prénom"
+                    placeholder="Prénom"
                     error={errors.firstName}
                     value={user.firstName}
                     onChange={handleChange}
@@ -76,7 +76,7 @@ const RegisterPage = ({ history }) => {
                 <Field
                     name="lastName"
                     label="Nom de famille"
-                    placeholder="Votre nom de famille"
+                    placeholder="Nom"
                     error={errors.lastName}
                     value={user.lastName}
                     onChange={handleChange}
@@ -84,7 +84,7 @@ const RegisterPage = ({ history }) => {
                 <Field
                     name="email"
                     label="Adresse email"
-                    placeholder="Votre adresse email"
+                    placeholder="Email"
                     type="email"
                     error={errors.email}
                     value={user.email}
@@ -94,16 +94,16 @@ const RegisterPage = ({ history }) => {
                     name="password"
                     label="Mot de passe"
                     type="password"
-                    placeholder="Votre mot de passe ultra sécurisé"
+                    placeholder="Mot de passe sécurisé"
                     error={errors.password}
                     value={user.password}
                     onChange={handleChange}
                 />
                 <Field
                     name="passwordConfirm"
-                    label="Confirmation de mot de passe"
+                    label="Confirmer mot de passe"
                     type="password"
-                    placeholder="Confirmez votre super mot de passe"
+                    placeholder="Mot de passe sécurisé"
                     error={errors.passwordConfirm}
                     value={user.passwordConfirm}
                     onChange={handleChange}

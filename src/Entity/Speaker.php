@@ -3,8 +3,23 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+
 
 /**
+ * @ORM\Table(name="speaker", uniqueConstraints={
+ *   @UniqueConstraint(name="speaker_unique",
+ *     columns={"user_id", "conference_id"})
+ *   }
+ * )
+ * @ApiResource(
+ *     normalizationContext={
+ *      "groups"={"speakers_read"}
+ *  },
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\SpeakerRepository")
  */
 class Speaker
@@ -13,12 +28,14 @@ class Speaker
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"speakers_read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="speakers")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"speakers_read"})
      */
     private $user;
 
@@ -27,11 +44,6 @@ class Speaker
      * @ORM\JoinColumn(nullable=false)
      */
     private $conference;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
 
     public function getId(): ?int
     {
@@ -58,18 +70,6 @@ class Speaker
     public function setConference(?Conference $conference): self
     {
         $this->conference = $conference;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }

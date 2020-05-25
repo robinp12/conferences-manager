@@ -6,4 +6,5 @@ export const PARTICIPANTS_API = API_URL + "participants";
 export const CONFERENCES_API = API_URL + "conferences";
 export const COMMENTS_API = API_URL + "comments";
 export const MEDECINS_API = API_URL + "medecins";
+export const SPEAKERS_API = API_URL + "speakers";
 export const LOGIN_API = API_URL + "login_check";
