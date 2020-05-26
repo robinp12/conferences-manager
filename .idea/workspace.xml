@@ -153,7 +153,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../TFE/AppFoot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Projet_Dev_Web/abbottApp" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
@@ -205,6 +205,7 @@
       <workItem from="1588287117654" duration="1396000" />
       <workItem from="1588691179623" duration="21699000" />
       <workItem from="1588771052558" duration="1741000" />
+      <workItem from="1590510257843" duration="898000" />
     </task>
     <servers />
   </component>

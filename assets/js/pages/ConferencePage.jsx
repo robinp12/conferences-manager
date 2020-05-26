@@ -199,7 +199,7 @@ const ConferencePage = (props) => {
                       to={"/conferenceQrCode/" + conference.id}
                       className="btn btn-primary btn-sm"
                     >
-                      Générer QrCodeFp
+                      Voir Qr Code
                     </Link>
                   </td>
                   <td className="text-center">

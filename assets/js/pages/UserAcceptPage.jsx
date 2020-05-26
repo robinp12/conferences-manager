@@ -113,13 +113,13 @@ const UserAcceptPage = () => {
                                     <>
                                         <button onClick={() => Accept(unacceptedUser.id)}
                                         className="btn btn-sm btn-success mr-3">Accepter</button>
-                                        < button onClick={() => handleDelete(unacceptedUser.id)} className="btn btn-sm btn-danger">Supprimer</button>
+                                        {unacceptedUsers.length > 1 && < button onClick={() => handleDelete(unacceptedUser.id)} className="btn btn-sm btn-danger">Supprimer</button>}
                                     </>
                                     ||
                                     <>
                                         <button onClick={() => Accept(unacceptedUser.id)}
                                             className="btn btn-sm btn-success mr-3" disabled={true}>Accepter</button>
-                                        <button onClick={() => handleDelete(unacceptedUser.id)} className="btn btn-sm btn-danger">Supprimer</button>
+                                        {unacceptedUsers.length > 1 && <button onClick={() => handleDelete(unacceptedUser.id)} className="btn btn-sm btn-danger">Supprimer</button>}
                                     </>
                                 }
                                 </td>

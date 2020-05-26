@@ -14,6 +14,7 @@ import UserAcceptPage from "./pages/UserAcceptPage";
 import Footer from './components/Footer';
 import ContactPage from "./pages/ContactPage";
 import conferencedetails from './pages/Conferencedetails';
+import DateFunctions from "./services/DateFunctions";
 import ProfilPage from "./pages/ProfilPage";
 import UserProfilPage from "./pages/UserProfilPage";
 import QrCodePage from "./pages/QrCodePage";

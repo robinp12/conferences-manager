@@ -71,21 +71,21 @@ const HomePage = (props) => {
               <table className="table table-hover container">
                 <thead className="">
                   <tr className={"row"}>
-                    <th className={"col-5"}>Nom conférence</th>
+                    <th className={"col-4"}>Nom conférence</th>
                     <th className={"col-3 text-center"}>Date</th>
-                    <th className={"col-4 text-center"}>\</th>
+                    <th className={"col-5 text-center"}>\</th>
                   </tr>
                 </thead>
                 <tbody>
                   {futureConferences.map((conf, index) => (
                     <tr key={conf.id} className={"row"}>
-                      <td className={"col-5"}>{conf.name}</td>
+                      <td className={"col-4"}>{conf.name}</td>
                       <td className={"col-3 text-center"}>
                         <small className="text-muted">
                           Dans {conf.dayLeft} jours
                         </small>
                       </td>
-                      <td className={"col-4 text-center"}>
+                      <td className={"col-5 text-center"}>
                         {(!conf["user"].includes(idUser) && (
                           <button
                             onClick={() => subscribe(conf.id)}
@@ -103,9 +103,9 @@ const HomePage = (props) => {
                         )}
                         <a
                           href={"#/conferencedetails/" + conf.id}
-                          className="btn btn-primary btn-sm ml-2"
+                          className="btn btn-primary btn-sm ml-1"
                         >
-                          Infos
+                          Plus d'infos
                         </a>
                       </td>
                     </tr>
@@ -120,26 +120,26 @@ const HomePage = (props) => {
                   <table className="table table-hover container">
                     <thead className="">
                       <tr className={"row"}>
-                        <th className={"col-5"}>Nom conférence</th>
+                        <th className={"col-4"}>Nom conférence</th>
                         <th className={"col-3 text-center"}>Date</th>
-                        <th className={"col-2 text-center"}>\</th>
+                        <th className={"col-5 text-center"}>\</th>
                       </tr>
                     </thead>
                     <tbody>
                       {pastConferences.map((conf, index) => (
                         <tr key={conf.id} className={"row"}>
-                          <td className={"col-5"}>{conf.name}</td>
+                          <td className={"col-4"}>{conf.name}</td>
                           <td className={"col-3 text-center"}>
                             <small className="text-muted">
                               {new Date(conf.start).toLocaleDateString()}
                             </small>
                           </td>
-                          <td className={"col-2 text-center"}>
+                          <td className={"col-5 text-center"}>
                             <a
                               href={"#/conferencedetails/" + conf.id}
-                              className="btn btn-primary btn-sm float-right mr-3"
+                              className="btn btn-primary btn-sm"
                             >
-                              Infos
+                              Plus d'infos
                             </a>
                           </td>
                         </tr>

@@ -222,7 +222,7 @@ const conferencedetails = (props) => {
                 onClick={() => modifConf()}
                 className="btn btn-outline-primary"
               >
-                Valider
+                Enregistrer
               </button>
             )
           }
@@ -267,7 +267,7 @@ const conferencedetails = (props) => {
               </Card>
             </Grid>
             <Grid item xs={9}>
-              <Card>
+              <Card className="mb-5">
                 <CardHeader className="text-muted" title="Description :" />
                 {(!isAdmin && (
                   <CardContent>
@@ -297,78 +297,82 @@ const conferencedetails = (props) => {
             </Grid>
           </Grid>
           {(isAdmin && (
-            <div className="mb-5 mt-5 container">
-              <Header title="Gestion des orateurs" />
-              <div className="row justify-content-center">
-                <div className="col-4">
-                  <h6 className="text-muted text-center">Ajouter un orateur</h6>
-                  <ReactSearchBox
-                    placeholder="Rechercher un orateur"
-                    data={users}
-                    onSelect={(record) => AddSpeaker(record["key"])}
-                    onFocus={() => {}}
-                    onChange={() => {}}
-                    fuseConfigs={{
-                      threshold: 0.05,
-                    }}
-                  />
-                </div>
-                </div>
-                <br/>
-                <div className="row">
-                <div className="col float-right">
-                <table className="table table-hover">
-                  <thead className="">
-                    <tr>
-                      <th>Nom</th>
-                      <th>\</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {speakers.map((speak) => (
-                      <tr key={speak.id}>
-                        <td>
-                          <Link
-                            to={"/profile/" + speak.user.id}
-                            className="btn btn-link pl-0"
-                          >
-                            <p className={"ml-3"}>
-                              <u>
-                                {speak.user.lastName +
-                                  " " +
-                                  speak.user.firstName}
-                              </u>
-                            </p>
-                          </Link>
-                        </td>
-                        <td>
-                          <button
-                            onClick={() => handleDelete(speak.id)}
-                            className="btn btn-sm btn-danger"
-                          >
-                            Supprimer
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <>
+              <Header
+                title="Gestion des orateurs"
+                other={
+                  <>
+                    <ReactSearchBox
+                      placeholder="Ajouter un orateur"
+                      data={users}
+                      onSelect={(record) => AddSpeaker(record["key"])}
+                      onFocus={() => {}}
+                      onChange={() => {}}
+                      fuseConfigs={{
+                        threshold: 0.05,
+                      }}
+                    />
+                  </>
+                }
+              />
+              <div className="mb-5 mt-1">
+                <div className="row justify-content-center">
+                  <div className="col-8">
+                    <table className="table table-hover">
+                      <thead>
+                        <tr>
+                          <th className="text-center">Nom</th>
+                          <th className="text-center">\</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {speakers.map((speak) => (
+                          <tr key={speak.id}>
+                            <td className="text-center">
+                              <Link
+                                to={"/profile/" + speak.user.id}
+                                className="btn btn-link pl-0"
+                              >
+                                <p className={"ml-3"}>
+                                  <u>
+                                    {speak.user.lastName +
+                                      " " +
+                                      speak.user.firstName}
+                                  </u>
+                                </p>
+                              </Link>
+                            </td>
+                            <td className="text-center">
+                              <button
+                                onClick={() => handleDelete(speak.id)}
+                                className="btn btn-sm btn-danger"
+                              >
+                                Supprimer
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           )) || (
             <>
-              <h5 className={"mt-5"}>Liste des orateurs</h5>
-              <table className="table table-hover">
+              <Header title="Liste des orateurs" />
+              <div className="row justify-content-center">
+                  <div className="col-6">
+              <table className="table table-hover ">
                 <thead className="">
                   <tr>
-                    <th>Nom</th>
+                  <th className="text-center">Nom</th>
                   </tr>
                 </thead>
                 <tbody>
                   {speakers.map((speak) => (
                     <tr key={speak.id}>
-                      <td>
+                      <td className="text-center">
                         <Link
                           to={"/profile/" + speak.user.id}
                           className="btn btn-link pl-0"
@@ -384,32 +388,40 @@ const conferencedetails = (props) => {
                   ))}
                 </tbody>
               </table>
+              </div>
+              </div>
             </>
           )}
-          <div className={"mt-3 ml-4 mr-4"}>
-            <h5 className="text-muted">Commentaires</h5>
-            <form onSubmit={handleSubmitComment} className={"ml-0 mr-5"}>
+          <Header title="Commentaires" />
+          <div className={"ml-4 mr-4"}>
+            <form onSubmit={handleSubmitComment} className={"ml-auto"}>
               <Field
                 onChange={handleChangeComment}
                 value={newComment}
-                placeholder="Ecrivez votre commentaire"
+                placeholder="Ecrire un commentaire"
                 type="text"
               />
             </form>
             <div>
               {typeof conferences.comments != "undefined" &&
                 conferences.comments.map((comm, index) => (
-                  <div className={"bg-light"} key={index}>
-                    <Link
-                      to={"/profile/" + comm.user.id}
-                      className="btn btn-link"
-                    >
-                      <p className={"ml-3"}>
-                        <u>{comm.user.lastName + " " + comm.user.firstName}</u>
-                      </p>
-                    </Link>
-                    <p className={"ml-3 mb-3"}>{comm.message}</p>
-                  </div>
+                  <>
+                    <div className={"bg-light"} key={index}>
+                      <Link
+                        to={"/profile/" + comm.user.id}
+                        className="btn btn-link"
+                      >
+                        <p className={"ml-1 mt-1 mb-1"}>
+                          <b>
+                            <u>
+                              {comm.user.lastName + " " + comm.user.firstName}
+                            </u>
+                          </b>
+                        </p>
+                      </Link>
+                      <p className={"ml-4 pb-3"}>{comm.message}</p>
+                    </div>
+                  </>
                 ))}
             </div>
           </div>

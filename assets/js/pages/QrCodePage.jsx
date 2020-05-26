@@ -11,6 +11,25 @@ const QrCodePage = (props) => {
   const fetchConference = async () => {
     try {
       const response = await ConferencesAPI.find(id);
+      for (let i = 0; i < response["participants"].length; i++) {
+        if (
+          typeof response["participants"][i]["user"]["telephone"] == "undefined"
+        ) {
+          response["participants"][i]["user"]["telephone"] = "";
+        }
+        if (
+          typeof response["participants"][i]["user"]["inamiNumber"] ==
+          "undefined"
+        ) {
+          response["participants"][i]["user"]["inamiNumber"] = "";
+        }
+        if (
+          typeof response["participants"][i]["user"]["speciality"] ==
+          "undefined"
+        ) {
+          response["participants"][i]["user"]["speciality"] = "";
+        }
+      }
       setConference(response);
     } catch (e) {}
   };
@@ -21,34 +40,36 @@ const QrCodePage = (props) => {
 
   return (
     <>
-      <Header title="Participants à la conférence" />
+      <Header title="Code QR des participants" />
 
-      <div className={"container"}>
-        {typeof conference.participants != "undefined" &&
-          conference.participants.map((p) => (
-            <div key={p.id} className={"m-5"}>
-              <Link to={"/profile/" + p.user.id} className="btn btn-link pl-0">
-                <p className={"ml-3"}>
+      {typeof conference.participants != "undefined" &&
+        conference.participants.map((p) => (
+          <div className="row mr-3 ml-3 justify-content-center" key={p.id}>
+            <div className="">
+              <Link
+                to={"/profile/" + p.user.id}
+                className="btn btn-link pl-0 ml-3"
+              >
+                <p className={""}>
                   <u>{p.user.lastName + " " + p.user.firstName}</u>
                 </p>
-              </Link>{" "}
+              </Link>
               <br />
               <QrCode
                 value={
                   p.user.lastName +
-                  " " +
-                  p.user.firstName +
-                  " " +
-                  p.user.telephone +
-                  "  " +
-                  p.user.speciality +
-                  " " +
-                  p.user.inamiNumber
+                    " " +
+                    p.user.firstName +
+                    " " +
+                    p.user.telephone ||
+                  "" + "  " + p.user.speciality ||
+                  "" + " " + p.user.inamiNumber ||
+                  ""
                 }
               />
             </div>
-          ))}
-      </div>
+          </div>
+        ))}
     </>
   );
 };

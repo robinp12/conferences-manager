@@ -48,5 +48,5 @@ function postInfosUser(obj){
 }
 
 export default {
-    findAll, find, create, update, deleteUser, findUnaccepted, getInfosUser, postInfosUser
+    findAll, find, create, update, deleteUser, findUnaccepted, getInfosUser, postInfosUser, signUp
 }
