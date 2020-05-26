@@ -183,8 +183,8 @@ const ConferencePage = (props) => {
               <tr>
                 <th className="text-center">#</th>
                 <th>Nom</th>
-                <th>Salle</th>
-                <th className="text-center">\</th>
+                <th className="text-center">Salle</th>
+                <th className="text-center">Participants</th>
                 <th className="text-center">\</th>
               </tr>
             </thead>
@@ -193,7 +193,7 @@ const ConferencePage = (props) => {
                 <tr key={conference.id}>
                   <td className="text-center">{conference.id}</td>
                   <td>{conference.name}</td>
-                  <td>{conference.room}</td>
+                  <td className="text-center">{conference.room}</td>
                   <td className="text-center">
                     <Link
                       to={"/conferenceQrCode/" + conference.id}
